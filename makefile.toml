@@ -1,0 +1,13 @@
+[config]
+default_no_workspace = false
+
+[env]
+GLOBAL = "global env"
+
+[tasks.set-env-local.env]
+LOCAL = "local env"
+
+[tasks.run]
+args = ["run"]
+command = "cargo"
+extend = "set-env-local"
