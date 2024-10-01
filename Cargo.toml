@@ -1,0 +1,10 @@
+[package]
+edition = "2021"
+name = "helloworld"
+version = "0.1.0"
+
+[[bin]]
+name = "app"
+path = "src/main.rs"
+
+[dependencies]
