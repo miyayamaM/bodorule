@@ -1,13 +1,16 @@
 [config]
 default_no_workspace = false
 
-[env]
-GLOBAL = "global env"
-
 [tasks.set-env-local.env]
-LOCAL = "local env"
+DATABASE_HOST = "localhost"
+DATABASE_PORT = 5432
+DATABASE_USER = "app"
+DATABASE_PASSWORD = "passwd"
+DATABASE_NAME = "app"
+DATABASE_URL = "postgresql://${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}?user=${DATABASE_USER}&password=${DATABASE_PASSWORD}"
 
-[tasks.run]
-args = ["run"]
-command = "cargo"
+[tasks.test]
 extend = "set-env-local"
+install_crate = { crate_name =  "cargo-nextest", binary = "cargo", test_args = ["nextest", "--help"] }
+command = "cargo"
+args = ["nextest", "run", "--workspace", "--status-level", "all", "--test-threads=1"]
