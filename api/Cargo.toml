@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-anyhow.workspace = true
 axum.workspace = true
-sqlx.workspace = true
-tokio.workspace = true
+registry.workspace = true
+domain.workspace = true
+shaku.workspace = true

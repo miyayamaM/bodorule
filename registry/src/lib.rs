@@ -1,14 +1,14 @@
-pub fn add(left: u64, right: u64) -> u64 {
-    left + right
+use shaku::module;
+
+module! {
+    pub AppModule {
+        components = [infra::repository::health::HealthCheckRepositoryImpl],
+        providers = []
+    }
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
+impl Clone for AppModule {
+    fn clone(&self) -> Self {
+        AppModule::builder().build()
     }
 }
