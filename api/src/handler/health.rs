@@ -1,3 +1,5 @@
+use std::sync::Arc;
+
 use axum::{extract::State, http::StatusCode};
 use domain::repository::health::HealthCheckRepository;
 use registry::AppModule;
@@ -7,7 +9,7 @@ pub async fn health_check() -> StatusCode {
     StatusCode::OK
 }
 
-pub async fn health_check_db(State(registry): State<AppModule>) -> StatusCode {
+pub async fn health_check_db(State(registry): State<Arc<AppModule>>) -> StatusCode {
     let health_repository: &dyn HealthCheckRepository = registry.resolve_ref();
     if health_repository.check_db().await {
         StatusCode::OK

@@ -1,54 +1,34 @@
 use std::net::{Ipv4Addr, SocketAddr};
+use std::sync::Arc;
 
 use anyhow::Result;
 use api::route::health::build_health_check_routes;
-use axum::{extract::State, http::StatusCode, routing::get, Router};
-use sqlx::{postgres::PgConnectOptions, PgPool};
+use axum::Router;
+use infra::database::config::DatabaseConfig;
+use infra::database::{PgConnectionPool, PgConnectionPoolParameters};
 use tokio::net::TcpListener;
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    let cfg = DatabaseConfig {
+    let config = DatabaseConfig {
         host: "localhost".to_string(),
         port: 5432,
         username: "app".to_string(),
         password: "passwd".to_string(),
         database: "app".to_string(),
     };
-    let pool = connect_database_with(cfg);
 
-    let registry = registry::AppModule::builder().build();
+    let registry = registry::AppModule::builder()
+        .with_component_parameters::<PgConnectionPool>(PgConnectionPoolParameters { config })
+        .build();
 
     let app = Router::new()
         .merge(build_health_check_routes())
-        .with_state(registry);
+        .with_state(Arc::new(registry));
 
     let address = SocketAddr::new(Ipv4Addr::LOCALHOST.into(), 8080);
 
     let listener = TcpListener::bind(address).await?;
     println!("listening on {}", address);
     Ok(axum::serve(listener, app).await?)
-}
-
-struct DatabaseConfig {
-    host: String,
-    port: u16,
-    username: String,
-    password: String,
-    database: String,
-}
-
-impl From<DatabaseConfig> for PgConnectOptions {
-    fn from(cfg: DatabaseConfig) -> Self {
-        PgConnectOptions::new()
-            .host(&cfg.host)
-            .port(cfg.port)
-            .username(&cfg.username)
-            .password(&cfg.password)
-            .database(&cfg.database)
-    }
-}
-
-fn connect_database_with(cfg: DatabaseConfig) -> PgPool {
-    PgPool::connect_lazy_with(cfg.into())
 }

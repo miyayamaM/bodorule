@@ -2,13 +2,12 @@ use shaku::module;
 
 module! {
     pub AppModule {
-        components = [infra::repository::health::HealthCheckRepositoryImpl],
-        providers = []
-    }
-}
+        components = [
+            infra::repository::health::HealthCheckRepositoryImpl,
 
-impl Clone for AppModule {
-    fn clone(&self) -> Self {
-        AppModule::builder().build()
+            // database
+            infra::database::PgConnectionPool
+        ],
+        providers = []
     }
 }
