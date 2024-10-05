@@ -1,6 +1,6 @@
 use sqlx::postgres::PgConnectOptions;
 
-#[derive(Clone, Default, Debug)]
+#[derive(Clone, Debug)]
 pub struct DatabaseConfig {
     pub host: String,
     pub port: u16,
