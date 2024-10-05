@@ -16,7 +16,7 @@ pub struct HealthCheckRepositoryImpl {
 #[async_trait]
 impl HealthCheckRepository for HealthCheckRepositoryImpl {
     async fn check_db(&self) -> bool {
-        let db = self.db.connect();
+        let db = self.db.get_connection();
         sqlx::query("SELECT 1").fetch_one(&db).await.is_ok()
     }
 }
