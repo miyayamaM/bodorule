@@ -1,7 +1,6 @@
-use sqlx::postgres::PgConnectOptions;
-
 #[derive(Clone, Debug)]
 pub struct DatabaseConfig {
+    pub protocol: String,
     pub host: String,
     pub port: u16,
     pub username: String,
@@ -9,13 +8,11 @@ pub struct DatabaseConfig {
     pub database: String,
 }
 
-impl From<DatabaseConfig> for PgConnectOptions {
-    fn from(cfg: DatabaseConfig) -> Self {
-        Self::new()
-            .host(&cfg.host)
-            .port(cfg.port)
-            .username(&cfg.username)
-            .password(&cfg.password)
-            .database(&cfg.database)
+impl DatabaseConfig {
+    pub fn to_database_url(&self) -> String {
+        format!(
+            "{}://{}:{}@{}/{}",
+            self.protocol, self.username, self.password, self.host, self.database
+        )
     }
 }

@@ -16,7 +16,6 @@ pub struct BoardgameRepositoryImpl {
 #[async_trait]
 impl BoardgameRepository for BoardgameRepositoryImpl {
     async fn save(&self, _boardgame: Boardgame) {
-        let db = self.db.get_connection();
-        sqlx::query("SELECT 1").fetch_one(&db).await.is_ok();
+        let _db = self.db.get_connection();
     }
 }

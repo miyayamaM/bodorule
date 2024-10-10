@@ -25,6 +25,7 @@ tokio = {version = "1.37.0", features = ["full"]}
 uuid = {version = "1.10.0", features = ["v4"]}
 url = "2"
 rstest = "0.18.2"
+sea-orm = { version = "1.0.1", features = [ "sqlx-postgres", "runtime-tokio-rustls", "macros" ] }
 
 [dependencies]
 api.workspace = true
@@ -37,4 +38,4 @@ axum.workspace = true
 sqlx.workspace = true
 tokio.workspace = true
 shaku.workspace = true
-
+sea-orm.workspace = true
