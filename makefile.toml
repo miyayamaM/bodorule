@@ -50,4 +50,4 @@ args = ["migrate", "run", "--source", "infra/migrations", "--database-url", "${D
 [tasks.gen-entity]
 extend = "set-env-local"
 command = "sea-orm-cli"
-args = ["generate", "entity", "-u", "${DATABASE_URL}", "-o", "./infra/orms"]
+args = ["generate", "entity", "-u", "${DATABASE_URL}", "-o", "./infra/src/orms"]
