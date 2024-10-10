@@ -2,6 +2,7 @@ use std::net::{Ipv4Addr, SocketAddr};
 use std::sync::Arc;
 
 use anyhow::Result;
+use api::route::boardgame::build_boardgame_routes;
 use api::route::health::build_health_check_routes;
 use axum::Router;
 use infra::database::config::DatabaseConfig;
@@ -27,6 +28,7 @@ async fn main() -> Result<()> {
 
     let app = Router::new()
         .merge(build_health_check_routes())
+        .merge(build_boardgame_routes())
         .with_state(Arc::new(registry));
 
     let address = SocketAddr::new(Ipv4Addr::LOCALHOST.into(), 8080);
