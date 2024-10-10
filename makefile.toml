@@ -17,6 +17,15 @@ AUTH_TOKEN_TTL = 86400
 DATABASE_HOST = "localhost"
 DATABASE_URL = "postgresql://${DATABASE_HOST}:${DATABASE_PORT_INNER}/${DATABASE_NAME}?user=${DATABASE_USERNAME}&password=${DATABASE_PASSWORD}"
 
+[tasks.dc-up]
+extend = "set-env-local"
+command = "docker"
+args = ["compose", "up", "-d"]
+
+[tasks.dc-down]
+command = "docker"
+args = ["compose", "down"]
+
 [tasks.test]
 extend = "set-env-local"
 install_crate = { crate_name =  "cargo-nextest", binary = "cargo", test_args = ["nextest", "--help"] }
