@@ -3,7 +3,7 @@ use std::sync::Arc;
 use async_trait::async_trait;
 use domain::repository::health::HealthCheckRepository;
 use sea_orm::{
-    sea_query::{self, PostgresQueryBuilder, Query},
+    sea_query::{self, Query},
     ConnectionTrait, Statement,
 };
 use shaku::Component;

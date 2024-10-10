@@ -46,3 +46,8 @@ extend = "set-env-local"
 install_crate = { crate_name =  "sqlx-cli", binary = "sqlx", test_args = ["--help"], version = "0.7.3" }
 command = "sqlx"
 args = ["migrate", "run", "--source", "infra/migrations", "--database-url", "${DATABASE_URL}"]
+
+[tasks.gen-entity]
+extend = "set-env-local"
+command = "sea-orm-cli"
+args = ["generate", "entity", "-u", "${DATABASE_URL}", "-o", "./infra/orms"]
