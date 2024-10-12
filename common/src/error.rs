@@ -9,17 +9,20 @@ pub enum AppError {
     #[error("{0}")]
     InvalidRequest(#[from] ParseError),
     #[error("{0}")]
+    DatabaseError(#[from] sea_orm::DbErr),
+    #[error("{0}")]
     ConversionEntityError(String),
 }
 
 impl IntoResponse for AppError {
     fn into_response(self) -> Response {
-        match self {
-            AppError::InvalidRequest(e) => (StatusCode::BAD_REQUEST, e.to_string()).into_response(),
-            AppError::ConversionEntityError(message) => {
-                (StatusCode::INTERNAL_SERVER_ERROR, message).into_response()
+        let status_code = match self {
+            AppError::InvalidRequest(_) => StatusCode::BAD_REQUEST,
+            AppError::ConversionEntityError(_) | AppError::DatabaseError(_) => {
+                StatusCode::INTERNAL_SERVER_ERROR
             }
-        }
+        };
+        status_code.into_response()
     }
 }
 

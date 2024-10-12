@@ -387,6 +387,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "axum",
+ "sea-orm",
  "thiserror",
  "url",
 ]
@@ -490,6 +491,7 @@ name = "domain"
 version = "0.1.0"
 dependencies = [
  "async-trait",
+ "common",
  "shaku",
  "url",
  "uuid",

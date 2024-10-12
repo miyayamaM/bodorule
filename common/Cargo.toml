@@ -8,3 +8,4 @@ anyhow.workspace = true
 thiserror.workspace = true
 axum.workspace = true
 url.workspace = true
+sea-orm.workspace = true

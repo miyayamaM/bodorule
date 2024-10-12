@@ -8,3 +8,4 @@ async-trait.workspace = true
 shaku.workspace = true
 uuid.workspace = true
 url.workspace = true
+common.workspace = true

@@ -3,6 +3,7 @@ use std::sync::Arc;
 use crate::orms::boardgames;
 use crate::{database::PgConnectionPoolInterface, orms};
 use async_trait::async_trait;
+use common::error::AppError;
 use domain::{entity::boardgame::Boardgame, repository::boardgame::BoardgameRepository};
 use sea_orm::EntityTrait;
 use sea_orm::{ActiveModelTrait, ActiveValue::NotSet, Set};
@@ -18,7 +19,7 @@ pub struct BoardgameRepositoryImpl {
 
 #[async_trait]
 impl BoardgameRepository for BoardgameRepositoryImpl {
-    async fn save(&self, boardgame: Boardgame) {
+    async fn save(&self, boardgame: Boardgame) -> Result<(), AppError> {
         let db = self.db.get_connection();
 
         let model = boardgames::ActiveModel {
@@ -28,17 +29,15 @@ impl BoardgameRepository for BoardgameRepositoryImpl {
             record_created_at: NotSet,
             record_updated_at: NotSet,
         };
-        model.insert(&db).await.unwrap();
+        model.insert(&db).await?;
+        Ok(())
     }
 
-    async fn find_by_id(&self, id: Uuid) -> Option<Boardgame> {
+    async fn find_by_id(&self, id: Uuid) -> Result<Option<Boardgame>, AppError> {
         let db = self.db.get_connection();
 
-        let model = orms::boardgames::Entity::find_by_id(id)
-            .one(&db)
-            .await
-            .unwrap();
+        let model = orms::boardgames::Entity::find_by_id(id).one(&db).await?;
 
-        model.map(|m| m.try_into().unwrap())
+        Ok(model.map(|m| m.try_into().unwrap()))
     }
 }
