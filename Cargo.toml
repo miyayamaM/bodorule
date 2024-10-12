@@ -21,6 +21,7 @@ async-trait = "0.1.74"
 axum = {version = "0.7.5", features = ["macros"]}
 shaku = {version = "0.6.2", features = ["derive"]}
 sqlx = {version = "0.7.3", features = ["runtime-tokio", "uuid", "postgres", "chrono", "macros", "migrate"]}
+serde = {version = "1", features = ["derive"]}
 tokio = {version = "1.37.0", features = ["full"]}
 uuid = {version = "1.10.0", features = ["v4"]}
 url = "2"

@@ -8,3 +8,7 @@ axum.workspace = true
 registry.workspace = true
 domain.workspace = true
 shaku.workspace = true
+serde.workspace = true
+uuid.workspace = true
+url.workspace = true
+anyhow.workspace = true
