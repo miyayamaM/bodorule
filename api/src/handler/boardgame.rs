@@ -1,7 +1,4 @@
-use axum::{
-    extract::{self, State},
-    http::StatusCode,
-};
+use axum::extract::{self, State};
 use domain::entity::boardgame::Boardgame;
 use domain::repository::boardgame::BoardgameRepository;
 use serde::Deserialize;
@@ -12,14 +9,15 @@ use uuid::Uuid;
 use registry::AppModule;
 use shaku::HasComponent;
 
+use crate::error::{AppError, ParseError};
+
 pub async fn create_board_game(
     State(registry): State<Arc<AppModule>>,
     extract::Json(payload): extract::Json<CreateBoardGameRequest>,
-) -> StatusCode {
+) -> Result<(), AppError> {
     let boardgame_repository: &dyn BoardgameRepository = registry.resolve_ref();
-    println!("{:#?}", payload);
-    boardgame_repository.save(payload.try_into().unwrap()).await;
-    StatusCode::OK
+    boardgame_repository.save(payload.try_into()?).await;
+    Ok(())
 }
 
 #[derive(Deserialize, Debug)]
@@ -29,12 +27,16 @@ pub struct CreateBoardGameRequest {
 }
 
 impl TryFrom<CreateBoardGameRequest> for Boardgame {
-    type Error = anyhow::Error;
+    type Error = AppError;
     fn try_from(value: CreateBoardGameRequest) -> Result<Self, Self::Error> {
         Ok(Self {
             id: Uuid::new_v4(),
             title: value.title,
-            thumbnail_url: value.thumbnail_url.and_then(|v| Url::parse(&v).ok()),
+            thumbnail_url: value
+                .thumbnail_url
+                .map(|v| Url::parse(&v))
+                .transpose()
+                .map_err(ParseError::from)?,
         })
     }
 }

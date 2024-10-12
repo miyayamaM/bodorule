@@ -90,6 +90,7 @@ dependencies = [
  "registry",
  "serde",
  "shaku",
+ "thiserror",
  "url",
  "uuid",
 ]

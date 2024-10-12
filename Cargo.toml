@@ -27,6 +27,7 @@ uuid = {version = "1.10.0", features = ["v4"]}
 url = "2"
 rstest = "0.18.2"
 sea-orm = { version = "1.0.1", features = [ "sqlx-postgres", "runtime-tokio-rustls", "macros" ] }
+thiserror = "1.0.64"
 
 [dependencies]
 api.workspace = true
