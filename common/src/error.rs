@@ -22,7 +22,7 @@ impl IntoResponse for AppError {
                 StatusCode::INTERNAL_SERVER_ERROR
             }
         };
-        status_code.into_response()
+        (status_code, self.to_string()).into_response()
     }
 }
 
