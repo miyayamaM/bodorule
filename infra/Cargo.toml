@@ -9,3 +9,6 @@ domain.workspace = true
 sqlx.workspace = true
 shaku.workspace = true
 sea-orm.workspace = true
+uuid.workspace = true
+url.workspace = true
+common.workspace = true

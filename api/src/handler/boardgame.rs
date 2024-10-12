@@ -1,4 +1,5 @@
 use axum::extract::{self, State};
+use common::error::{AppError, ParseError};
 use domain::entity::boardgame::Boardgame;
 use domain::repository::boardgame::BoardgameRepository;
 use serde::Deserialize;
@@ -8,8 +9,6 @@ use uuid::Uuid;
 
 use registry::AppModule;
 use shaku::HasComponent;
-
-use crate::error::{AppError, ParseError};
 
 pub async fn create_board_game(
     State(registry): State<Arc<AppModule>>,
@@ -22,7 +21,7 @@ pub async fn create_board_game(
 
 #[derive(Deserialize, Debug)]
 pub struct CreateBoardGameRequest {
-    pub title: String,
+    pub name: String,
     pub thumbnail_url: Option<String>,
 }
 
@@ -31,7 +30,7 @@ impl TryFrom<CreateBoardGameRequest> for Boardgame {
     fn try_from(value: CreateBoardGameRequest) -> Result<Self, Self::Error> {
         Ok(Self {
             id: Uuid::new_v4(),
-            title: value.title,
+            name: value.name,
             thumbnail_url: value
                 .thumbnail_url
                 .map(|v| Url::parse(&v))

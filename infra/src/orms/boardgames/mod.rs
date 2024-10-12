@@ -2,6 +2,8 @@
 
 use sea_orm::entity::prelude::*;
 
+pub mod conversion;
+
 #[derive(Clone, Debug, PartialEq, DeriveEntityModel, Eq)]
 #[sea_orm(table_name = "boardgames")]
 pub struct Model {

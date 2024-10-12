@@ -3,6 +3,6 @@ use uuid::Uuid;
 
 pub struct Boardgame {
     pub id: Uuid,
-    pub title: String,
+    pub name: String,
     pub thumbnail_url: Option<Url>,
 }
