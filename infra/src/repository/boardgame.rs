@@ -38,7 +38,7 @@ impl BoardgameRepository for BoardgameRepositoryImpl {
 
         let model = orms::boardgames::Entity::find_by_id(id).one(&db).await?;
 
-        Ok(model.map(|m| m.try_into().unwrap()))
+        Ok(model.map(|m| m.try_into()).transpose()?)
     }
 
     async fn find_many(&self) -> Result<Vec<Boardgame>, AppError> {
@@ -46,6 +46,9 @@ impl BoardgameRepository for BoardgameRepositoryImpl {
 
         let model = orms::boardgames::Entity::find().all(&db).await?;
 
-        Ok(model.into_iter().map(|m| m.try_into().unwrap()).collect())
+        Ok(model
+            .into_iter()
+            .map(|m| m.try_into())
+            .collect::<Result<Vec<_>, _>>()?)
     }
 }
