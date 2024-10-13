@@ -40,4 +40,8 @@ impl BoardgameRepository for BoardgameRepositoryImpl {
 
         Ok(model.map(|m| m.try_into().unwrap()))
     }
+
+    async fn find_many(&self) -> Result<Vec<Boardgame>, AppError> {
+        todo!()
+    }
 }

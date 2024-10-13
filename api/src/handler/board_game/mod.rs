@@ -4,6 +4,7 @@ use uuid::Uuid;
 
 pub mod create_board_game;
 pub mod show_board_game;
+pub mod show_board_games;
 
 #[derive(Serialize)]
 pub struct BoardGameResponse {

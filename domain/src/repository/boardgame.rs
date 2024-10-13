@@ -9,4 +9,5 @@ use crate::entity::boardgame::Boardgame;
 pub trait BoardgameRepository: Interface {
     async fn save(&self, entity: Boardgame) -> Result<(), AppError>;
     async fn find_by_id(&self, id: Uuid) -> Result<Option<Boardgame>, AppError>;
+    async fn find_many(&self) -> Result<Vec<Boardgame>, AppError>;
 }
