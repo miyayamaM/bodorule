@@ -14,12 +14,16 @@ pub enum AppError {
     DatabaseError(#[from] sea_orm::DbErr),
     #[error("{0}")]
     ConversionEntityError(String),
+    #[error("{0}")]
+    EntityNotFoundError(String),
 }
 
 impl IntoResponse for AppError {
     fn into_response(self) -> Response {
         let status_code = match self {
-            AppError::InvalidRequest(_) => StatusCode::BAD_REQUEST,
+            AppError::InvalidRequest(_) | AppError::EntityNotFoundError(_) => {
+                StatusCode::BAD_REQUEST
+            }
             AppError::ConversionEntityError(_) | AppError::DatabaseError(_) => {
                 StatusCode::INTERNAL_SERVER_ERROR
             }

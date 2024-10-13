@@ -1,2 +1,2 @@
-pub mod boardgame;
+pub mod board_game;
 pub mod health;
