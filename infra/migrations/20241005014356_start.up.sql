@@ -7,8 +7,8 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- boardgames テーブルの定義
-CREATE TABLE IF NOT EXISTS boardgames (
+-- board_games テーブルの定義
+CREATE TABLE IF NOT EXISTS board_games (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name VARCHAR(255) NOT NULL,
     thumbnail_url VARCHAR(1000),
@@ -17,6 +17,6 @@ CREATE TABLE IF NOT EXISTS boardgames (
 );
 
 CREATE TRIGGER trigger_update_record_updated_at
-BEFORE UPDATE ON boardgames
+BEFORE UPDATE ON board_games
 FOR EACH ROW
 EXECUTE FUNCTION update_record_updated_at();

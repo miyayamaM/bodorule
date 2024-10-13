@@ -5,7 +5,7 @@ use sea_orm::entity::prelude::*;
 pub mod conversion;
 
 #[derive(Clone, Debug, PartialEq, DeriveEntityModel, Eq)]
-#[sea_orm(table_name = "boardgames")]
+#[sea_orm(table_name = "board_games")]
 pub struct Model {
     #[sea_orm(primary_key, auto_increment = false)]
     pub id: Uuid,

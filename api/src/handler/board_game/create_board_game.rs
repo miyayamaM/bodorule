@@ -1,7 +1,7 @@
 use axum::extract::{self, State};
 use common::error::{AppError, ParseError};
-use domain::entity::boardgame::Boardgame;
-use domain::repository::boardgame::BoardgameRepository;
+use domain::entity::board_game::BoardGame;
+use domain::repository::board_game::BoardGameRepository;
 use serde::Deserialize;
 use std::sync::Arc;
 use url::Url;
@@ -14,8 +14,8 @@ pub async fn create_board_game(
     State(registry): State<Arc<AppModule>>,
     extract::Json(payload): extract::Json<CreateBoardGameRequest>,
 ) -> Result<(), AppError> {
-    let boardgame_repository: &dyn BoardgameRepository = registry.resolve_ref();
-    boardgame_repository.save(payload.try_into()?).await?;
+    let board_game_repository: &dyn BoardGameRepository = registry.resolve_ref();
+    board_game_repository.save(payload.try_into()?).await?;
     Ok(())
 }
 
@@ -25,7 +25,7 @@ pub struct CreateBoardGameRequest {
     pub thumbnail_url: Option<String>,
 }
 
-impl TryFrom<CreateBoardGameRequest> for Boardgame {
+impl TryFrom<CreateBoardGameRequest> for BoardGame {
     type Error = AppError;
     fn try_from(value: CreateBoardGameRequest) -> Result<Self, Self::Error> {
         Ok(Self {

@@ -1,1 +1,1 @@
-pub mod boardgame;
+pub mod board_game;

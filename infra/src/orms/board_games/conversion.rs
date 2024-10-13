@@ -1,13 +1,13 @@
 use common::error::AppError;
-use domain::entity::boardgame::Boardgame;
+use domain::entity::board_game::BoardGame;
 use url::Url;
 
 use super::Model;
 
-impl TryFrom<Model> for Boardgame {
+impl TryFrom<Model> for BoardGame {
     type Error = AppError;
     fn try_from(value: Model) -> Result<Self, Self::Error> {
-        Ok(Boardgame {
+        Ok(BoardGame {
             id: value.id,
             name: value.name,
             thumbnail_url: value

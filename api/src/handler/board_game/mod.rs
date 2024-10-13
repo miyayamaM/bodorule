@@ -1,4 +1,4 @@
-use domain::entity::boardgame::Boardgame;
+use domain::entity::board_game::BoardGame;
 use serde::Serialize;
 use uuid::Uuid;
 
@@ -13,12 +13,12 @@ pub struct BoardGameResponse {
     thumbnail_url: Option<String>,
 }
 
-impl From<Boardgame> for BoardGameResponse {
-    fn from(boardgame: Boardgame) -> Self {
+impl From<BoardGame> for BoardGameResponse {
+    fn from(board_game: BoardGame) -> Self {
         BoardGameResponse {
-            id: boardgame.id,
-            name: boardgame.name,
-            thumbnail_url: boardgame.thumbnail_url.map(|v| v.into()),
+            id: board_game.id,
+            name: board_game.name,
+            thumbnail_url: board_game.thumbnail_url.map(|v| v.into()),
         }
     }
 }
