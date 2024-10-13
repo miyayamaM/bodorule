@@ -42,6 +42,10 @@ impl BoardgameRepository for BoardgameRepositoryImpl {
     }
 
     async fn find_many(&self) -> Result<Vec<Boardgame>, AppError> {
-        todo!()
+        let db = self.db.get_connection();
+
+        let model = orms::boardgames::Entity::find().all(&db).await?;
+
+        Ok(model.into_iter().map(|m| m.try_into().unwrap()).collect())
     }
 }
