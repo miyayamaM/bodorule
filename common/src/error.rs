@@ -1,7 +1,9 @@
 use axum::{
     http::StatusCode,
     response::{IntoResponse, Response},
+    Json,
 };
+use serde::Serialize;
 use thiserror::Error;
 
 #[derive(Error, Debug)]
@@ -22,7 +24,11 @@ impl IntoResponse for AppError {
                 StatusCode::INTERNAL_SERVER_ERROR
             }
         };
-        (status_code, self.to_string()).into_response()
+
+        let error_message = ErrorResponse {
+            message: self.to_string(),
+        };
+        (status_code, Json(error_message)).into_response()
     }
 }
 
@@ -30,4 +36,9 @@ impl IntoResponse for AppError {
 pub enum ParseError {
     #[error("URL parse error: {0}")]
     UrlParseError(#[from] url::ParseError),
+}
+
+#[derive(Serialize)]
+struct ErrorResponse {
+    message: String,
 }

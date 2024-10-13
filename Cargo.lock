@@ -388,6 +388,7 @@ dependencies = [
  "anyhow",
  "axum",
  "sea-orm",
+ "serde",
  "thiserror",
  "url",
 ]

@@ -15,7 +15,7 @@ pub async fn create_board_game(
     extract::Json(payload): extract::Json<CreateBoardGameRequest>,
 ) -> Result<(), AppError> {
     let boardgame_repository: &dyn BoardgameRepository = registry.resolve_ref();
-    boardgame_repository.save(payload.try_into()?).await;
+    boardgame_repository.save(payload.try_into()?).await?;
     Ok(())
 }
 
