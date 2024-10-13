@@ -17,7 +17,7 @@ AUTH_TOKEN_TTL = 86400
 DATABASE_HOST = "localhost"
 DATABASE_URL = "postgresql://${DATABASE_HOST}:${DATABASE_PORT_INNER}/${DATABASE_NAME}?user=${DATABASE_USERNAME}&password=${DATABASE_PASSWORD}"
 
-[tasks.reset]
+[tasks.dc-reset]
 run_task = [
     { name = [
         "dc-down",
