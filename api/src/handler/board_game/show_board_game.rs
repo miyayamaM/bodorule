@@ -20,7 +20,7 @@ pub async fn show_board_game(
     let board_game = boardgame_repository.find_by_id(board_game_id).await?;
     Ok(Json(
         board_game
-            .ok_or(AppError::EntityNotFoundError("Not found".to_string()))?
+            .ok_or(AppError::EntityNotFoundError("Item Not found".to_string()))?
             .into(),
     ))
 }
